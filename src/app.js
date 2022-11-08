@@ -8,13 +8,14 @@ import './styles/app.css'
 function App() {
   console.log(initialEmails)
   const [emails, setEmails] = useState(initialEmails)
-  const emailList = emails.map((email, i) => {
-    return (
-      <li key={email.id} className="email">
-        {email.title}
-      </li>
-    )
-  })
+  // not sure how to get this approach to work correctly????
+  // const emailList = emails.map((email, i) => {
+  //   return (
+  //     <li key={email.id} className="email">
+  //       {email.title}
+  //     </li>
+  //   )
+  // })
   return (
     <div className="app">
       <Header />
@@ -46,7 +47,20 @@ function App() {
           </li>
         </ul>
       </nav>
-      <main className="emails">{emailList}</main>
+      <main className="emails">
+        {emails.map((email) => (
+          <li className="email">
+            <div className="select">
+              <input className="select-checkbox" type="checkbox" />
+            </div>
+            <div className="star">
+              <input className="star-checkbox" type="checkbox" />
+            </div>
+            <div className="sender">{email.sender}</div>
+            <div className="title">{email.title}</div>
+          </li>
+        ))}
+      </main>
     </div>
   )
 }
