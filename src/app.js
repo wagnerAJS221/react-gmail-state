@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Header from './components/header'
-
+// import EmailTemplate from './templates/emailTemplate.html'
 import initialEmails from './data/emails'
 
 import './styles/app.css'
@@ -9,7 +9,11 @@ function App() {
   console.log(initialEmails)
   const [emails, setEmails] = useState(initialEmails)
   const emailList = emails.map((email, i) => {
-    return <li className="email">{email.title}</li>
+    return (
+      <li key={email.id} className="email">
+        {email.title}
+      </li>
+    )
   })
   return (
     <div className="app">
