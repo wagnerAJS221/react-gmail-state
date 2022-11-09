@@ -8,6 +8,17 @@ import './styles/app.css'
 function App() {
   console.log(initialEmails)
   const [emails, setEmails] = useState(initialEmails)
+  const [readEmailsHidden, setReadEmailsHidden] = useState(false)
+  const toggleRead = (targetEmail) => {}
+
+  console.log('app, hide read emails?', readEmailsHidden)
+
+  const emailsToRender = emails.filter((email) => {
+    if (readEmailsHidden && email.read === true) {
+      return false
+    }
+    return true
+  })
   // not sure how to get this approach to work correctly????
   // const emailList = emails.map((email, i) => {
   //   return (
@@ -15,7 +26,28 @@ function App() {
   //       {email.title}
   //     </li>
   //   )
-  // })
+  // }) see below
+
+  const emailsAsJSX = emails.map((email) => {
+    const emailCSSClass = email.read ? 'email read' : 'email unread'
+    return (
+      <li className={emailCSSClass} key={email.id}>
+        <div className="select">
+          <input className="select-checkbox" type="checkbox" />
+        </div>
+        <div className="star">
+          <input
+            className="star-checkbox"
+            type="checkbox"
+            checked={email.starred}
+          />
+        </div>
+        <div className="sender">{email.sender}</div>
+        <div className="title">{email.title}</div>
+      </li>
+    )
+  })
+
   return (
     <div className="app">
       <Header />
@@ -47,20 +79,7 @@ function App() {
           </li>
         </ul>
       </nav>
-      <main className="emails">
-        {emails.map((email) => (
-          <li className="email">
-            <div className="select">
-              <input className="select-checkbox" type="checkbox" />
-            </div>
-            <div className="star">
-              <input className="star-checkbox" type="checkbox" />
-            </div>
-            <div className="sender">{email.sender}</div>
-            <div className="title">{email.title}</div>
-          </li>
-        ))}
-      </main>
+      <main className="emails">{emailsAsJSX}</main>
     </div>
   )
 }
